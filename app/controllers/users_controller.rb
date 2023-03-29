@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :set_user, only: [:show, :edit, :update]
 
   def show
@@ -9,7 +8,6 @@ class UsersController < ApplicationController
   def index
     @users = User.paginate(page: params[:page], per_page: 5)
   end
-
   def new
     @user = User.new
   end
@@ -19,33 +17,29 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:notice] = "Your account information was updated successfully"
+      flash[:notice] = "Your account information was successfully updated"
       redirect_to @user
     else
-      render 'edit'
+      render 'edit', status: :unprocessable_entity
     end
-
   end
-
   def create
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      flash[:notice] = "Welcome to the Bloggers Community #{@user.username}, you have succesfully Signed up!"
+      flash[:notice] = "Welcome to the Alpha Blog #{@user.username}, you have successfully signed up"
       redirect_to articles_path
     else
-      render 'new'
+      render 'new', status: :unprocessable_entity
     end
   end
-
   private
   def user_params
     params.require(:user).permit(:username, :email, :password)
   end
 
   def set_user
-    params.require(:user).permit(:username, :email, :password)
+    @user = User.find(params[:id])
   end
-
 
 end
