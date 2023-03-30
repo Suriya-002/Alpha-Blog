@@ -43,6 +43,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   #     delete category_url(@category)
   #   end
 
-    assert_redirected_to categories_url
-  end
+    # assert_redirected_to categories_url
+  # end
 end
